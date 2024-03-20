@@ -1,0 +1,19 @@
+dirigente;XYZA17890;Andrea;Rossi;2008-02-05;Amministrazione
+dirigente;BCDE29013;Paolo;Neri;2015-11-11;Sviluppo
+manager;VWX852147963;Elena;Bianchi;2015-12-10;XYZA17890;contabilità
+manager;GHIJ70315;Federico;Russo;2014-04-23;BCDE29013;test
+manager;LMNO82460;Elisa;Verdi;2018-01-29;BCDE29013;manutenzione
+manager;PQRS94627;Elena;Gialli;2016-08-03;BCDE29013;supporto clienti
+manager;TUVW06739;Roberto;Verdi;2011-05-09;XYZA17890;paghe
+tecnico;ABCD12345;Mario;Rossi;1995-05-03;VWX852147963;hw
+tecnico;EFGH67890;Giulia;Verdi;2000-12-10;GHIJ70315;hw
+tecnico;IJKL13579;Luca;Bianchi;2007-09-15;GHIJ70315;hw
+tecnico;MNOP24680;Anna;Russo;2010-06-20;VWX852147963;hw
+tecnico;QRST35791;Paola;Gialli;2015-03-25;GHIJ70315;hw
+tecnico;UVWX46923;Giovanni;Verdi;2019-11-30;VWX852147963;sw
+tecnico;ABC123456789;Mario;Rossi;2005-09-05;LMNO82460;sw
+tecnico;DEF987654321;Anna;Verdi;2020-02-12;LMNO82460;sw
+tecnico;GHI246813579;Luca;Bianchi;2018-11-03;PQRS94627;sw
+tecnico;JKL369258147;Giovanna;Rossini;2014-07-20;PQRS94627;sw
+tecnico;MNO159357486;Marco;Gialli;2000-04-15;PQRS94627;sw
+tecnico;PQR753159246;Carla;Neri;2012-10-22;PQRS94627;sw
