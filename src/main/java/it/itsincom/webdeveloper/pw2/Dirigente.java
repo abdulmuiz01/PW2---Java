@@ -2,51 +2,70 @@ package it.itsincom.webdeveloper.pw2;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
- 
+import java.util.Objects;
+
 public class Dirigente extends Dipendente {
     private String divisione;
     private static ArrayList<Dipendente> dipendenti = new ArrayList<>();
- 
+
+    public static ArrayList<Dipendente> getDipendenti() {
+        return dipendenti;
+    }
+
     public Dirigente(String ruolo, String codiceFiscale, String nome, String cognome, String divisione,
             LocalDate dataAssunzione) {
         super(ruolo, codiceFiscale, nome, cognome, dataAssunzione);
         this.divisione = divisione;
         this.stipendio = calcolaStipendio();
     }
- 
-    private double calcolaStipendio() {
-        double stipendioDir = 2500;
-        double bonus = calcolaBonus();
-        return stipendioDir + bonus;
+
+    // si basa sull'araylist dipendenti deve esserre inizializzato
+    @Override
+    public double calcolaStipendio() {
+        double stipendioBase = 2500; // salario standard
+        double bonus = calcolaBonus(); // calc bonus
+        return stipendioBase + bonus;
     }
- 
-    private double calcolaBonus() {
+
+    public double calcolaBonus() {
         double totaleStipendi = 0;
- 
+
         for (Dipendente dipendente : dipendenti) {
-            if (!(dipendente instanceof Dirigente)) {
-                totaleStipendi += dipendente.getStipendio();
-            }
+            totaleStipendi += dipendente.calcolaStipendio();
         }
+
         return totaleStipendi * 0.1;
     }
- 
-    public static void aggiungiDipendente(Dipendente dipendente) {
+
+    public void aggiungiDipendente(Dipendente dipendente) {
         dipendenti.add(dipendente);
     }
- 
+
     public String getDivisione() {
         return divisione;
     }
- 
-    public static void setDipendenti(ArrayList<Dipendente> dipendenti) {
+
+    public void setDipendenti(ArrayList<Dipendente> dipendenti) {
         Dirigente.dipendenti = dipendenti;
     }
- 
+
     @Override
     public String toString() {
         return "Dirigente [codiceFiscale=" + getCodiceFiscale() + ", nome=" + getNome() + ", cognome="
                 + getCognome() + ", dataAssunzione=" + getDataAssunzione() + ", stipendio=" + calcolaStipendio()
                 + ", divisione=" + divisione + "]";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Dipendente other = (Dipendente) obj;
+        return Objects.equals(codiceFiscale, other.codiceFiscale);
+    }
+
 }

@@ -1,75 +1,72 @@
 package it.itsincom.webdeveloper.pw2;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
- 
+import java.util.Objects;
+
 public class Manager extends Dipendente {
-    private String settoreCompetenza;
     private ArrayList<Tecnico> tecniciDiretti;
-    private String codiceFiscDirigente;
-    private static ArrayList<Dipendente> dipendenti = new ArrayList<>();
- 
+    private String settoreCompetenza;
+
     public Manager(String ruolo, String codiceFiscale, String nome, String cognome, LocalDate dataAssunzione,
-            String codiceFiscDirigente, String settoreCompetenza) {
+            String settoreCompetenza) {
         super(ruolo, codiceFiscale, nome, cognome, dataAssunzione);
-        this.codiceFiscDirigente = codiceFiscDirigente;
         this.settoreCompetenza = settoreCompetenza;
         this.tecniciDiretti = new ArrayList<>();
-        this.stipendio = calcolaStipendio();
     }
- 
-    double calcolaStipendio() {
-        double stipendioBase = 2000;
-        double bonus = calcolaBonus();
-        return stipendioBase + bonus;
-    }
- 
-    double calcolaBonus() {
-        double totaleBonus = 0;
-        for (Dipendente dipendente : dipendenti) {
-            if (dipendente instanceof Tecnico) {
-                Tecnico tecnico = (Tecnico) dipendente;
-                if (tecnico.getCodiceFiscManager().equals(getCodiceFiscale())) {
-                    totaleBonus += tecnico.getStipendio() * 0.1;
-                }
-            }
-        }
-        return totaleBonus;
-    }
- 
-    public void aggiungiTecnicoDiretto(Tecnico tecnico) {
+
+    public void addTecnico(Tecnico tecnico) {
         tecniciDiretti.add(tecnico);
     }
- 
-    public static void aggiungiDipendente(Dipendente dipendente) {
-        dipendenti.add(dipendente);
+
+    @Override
+    double calcolaStipendio() {
+        double baseSalary = 2000.0;
+        double bonus = 0.0;
+
+        for (Tecnico tecnico : tecniciDiretti) {
+            if (tecnico.anniLavorati() < 10) {
+                bonus += 150.0; // 10% di 1500€ quelli - 10 anni
+            } else {
+                bonus += 160.0; // 10% di 1600€ quelli + 10 anni
+            }
+        }
+
+        return baseSalary + bonus;
     }
- 
-    public static void setDipendenti(ArrayList<Dipendente> dipendenti) {
-        Manager.dipendenti = dipendenti;
-    }
- 
-    public String getCodiceFiscDirigente() {
-        return codiceFiscDirigente;
-    }
- 
-    public String getSettoreCompetenza() {
-        return settoreCompetenza;
-    }
- 
+
     public ArrayList<Tecnico> getTecniciDiretti() {
         return tecniciDiretti;
     }
- 
-    @Override
-    public double getStipendio() {
-        return calcolaStipendio();
+
+    public void setTecniciDiretti(ArrayList<Tecnico> tecniciDiretti) {
+        this.tecniciDiretti = tecniciDiretti;
     }
- 
+
+    public String getSettoreCompetenza() {
+        return settoreCompetenza;
+    }
+
+    public void setSettoreCompetenza(String settoreCompetenza) {
+        this.settoreCompetenza = settoreCompetenza;
+    }
+
     @Override
     public String toString() {
         return "Manager [ruolo=" + getRuolo() + ", codiceFiscale=" + getCodiceFiscale() + ", nome=" + getNome()
                 + ", cognome=" + getCognome() + ", dataAssunzione=" + getDataAssunzione() + ", stipendio="
-                + getStipendio() + ", settoreCompetenza=" + settoreCompetenza;
+                + calcolaStipendio() + ", settoreCompetenza=" + settoreCompetenza + "]";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Dipendente other = (Dipendente) obj;
+        return Objects.equals(codiceFiscale, other.codiceFiscale);
+    }
+
 }

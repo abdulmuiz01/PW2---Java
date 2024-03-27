@@ -1,47 +1,70 @@
 package it.itsincom.webdeveloper.pw2;
 
 import java.time.LocalDate;
- 
-class Tecnico extends Dipendente {
+import java.time.Period;
+import java.util.Objects;
+
+public class Tecnico extends Dipendente {
+    private String codiceFiscaleDirigente;
     private String specialita;
-    private String codiceFiscManager;
- 
+
     public Tecnico(String ruolo, String codiceFiscale, String nome, String cognome, LocalDate dataAssunzione,
-            String codiceFiscManager, String specialita) {
+                   String codiceFiscaleDirigente, String specialita) {
         super(ruolo, codiceFiscale, nome, cognome, dataAssunzione);
-        this.codiceFiscManager = codiceFiscManager;
+        this.codiceFiscaleDirigente = codiceFiscaleDirigente;
         this.specialita = specialita;
         this.stipendio = calcolaStipendio();
     }
- 
-    private double calcolaStipendio() {
-        LocalDate oggi = LocalDate.now();
-        int anzianita = oggi.getYear() - getDataAssunzione().getYear();
- 
-        if (getDataAssunzione().isAfter(oggi.minusYears(anzianita))
-                || getDataAssunzione().isEqual(oggi.minusYears(anzianita))) {
-            anzianita--;
-        }
- 
-        if (anzianita < 10) {
-            return 1500;
+
+    @Override
+    double calcolaStipendio() {
+        if (anniLavorati() < 10) {
+            return 1500.0; // tecnico - 10 anni lavoro
         } else {
-            return 1600;
+            return 1600.0; // tecnico + 10 anni lavoro
         }
     }
- 
+
+   public int anniLavorati() {
+        LocalDate today = LocalDate.now();
+        Period period = Period.between(getDataAssunzione(), today);
+        return period.getYears();
+    }
+
+    // Getters and setters
+
+    public String getCodiceFiscaleDirigente() {
+        return codiceFiscaleDirigente;
+    }
+
+    public void setCodiceFiscaleDirigente(String codiceFiscaleDirigente) {
+        this.codiceFiscaleDirigente = codiceFiscaleDirigente;
+    }
+
     public String getSpecialita() {
         return specialita;
     }
- 
-    public String getCodiceFiscManager() {
-        return codiceFiscManager;
+
+    public void setSpecialita(String specialita) {
+        this.specialita = specialita;
     }
- 
+
     @Override
     public String toString() {
         return "Tecnico [ruolo=" + getRuolo() + ", codiceFiscale=" + getCodiceFiscale() + ", nome=" + getNome()
-                + ", cognome=" + getCognome() + ", dataAssunzione=" + getDataAssunzione() + ", stipendio="
-                + getStipendio() + ", specialita=" + specialita + "]";
+                + ", cognome=" + getCognome() + ", dataAssunzione=" + getDataAssunzione() + ", stipendio=" + stipendio
+                + ", codiceFiscaleDirigente=" + codiceFiscaleDirigente + ", specialita=" + specialita + "]";
     }
+    @Override
+public boolean equals(Object obj) {
+    if (this == obj) {
+        return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+        return false;
+    }
+    Dipendente other = (Dipendente) obj;
+    return Objects.equals(codiceFiscale, other.codiceFiscale);
+}
+
 }
