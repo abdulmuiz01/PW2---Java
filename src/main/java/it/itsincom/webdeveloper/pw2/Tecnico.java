@@ -2,21 +2,19 @@ package it.itsincom.webdeveloper.pw2;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Objects;
 
 public class Tecnico extends Dipendente {
     private String codiceFiscaleDirigente;
     private String specialita;
 
     public Tecnico(String ruolo, String codiceFiscale, String nome, String cognome, LocalDate dataAssunzione,
-                   String codiceFiscaleDirigente, String specialita) {
+            String codiceFiscaleDirigente, String specialita) {
         super(ruolo, codiceFiscale, nome, cognome, dataAssunzione);
         this.codiceFiscaleDirigente = codiceFiscaleDirigente;
         this.specialita = specialita;
         this.stipendio = calcolaStipendio();
     }
 
-    @Override
     double calcolaStipendio() {
         if (anniLavorati() < 10) {
             return 1500.0; // tecnico - 10 anni lavoro
@@ -25,7 +23,7 @@ public class Tecnico extends Dipendente {
         }
     }
 
-   public int anniLavorati() {
+    public int anniLavorati() {
         LocalDate today = LocalDate.now();
         Period period = Period.between(getDataAssunzione(), today);
         return period.getYears();
@@ -55,16 +53,21 @@ public class Tecnico extends Dipendente {
                 + ", cognome=" + getCognome() + ", dataAssunzione=" + getDataAssunzione() + ", stipendio=" + stipendio
                 + ", codiceFiscaleDirigente=" + codiceFiscaleDirigente + ", specialita=" + specialita + "]";
     }
+
     @Override
-public boolean equals(Object obj) {
-    if (this == obj) {
-        return true;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Dipendente other = (Dipendente) obj;
+        if (codiceFiscale == null) {
+            return other.codiceFiscale == null;
+        } else {
+            return codiceFiscale.equals(other.codiceFiscale);
+        }
     }
-    if (obj == null || getClass() != obj.getClass()) {
-        return false;
-    }
-    Dipendente other = (Dipendente) obj;
-    return Objects.equals(codiceFiscale, other.codiceFiscale);
-}
 
 }

@@ -1,7 +1,7 @@
 package it.itsincom.webdeveloper.pw2;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Manager extends Dipendente {
     private ArrayList<Tecnico> tecniciDiretti;
@@ -15,12 +15,13 @@ public class Manager extends Dipendente {
     }
 
     public void addTecnico(Tecnico tecnico) {
-        tecniciDiretti.add(tecnico);
+        if (!tecniciDiretti.contains(tecnico)) {
+            tecniciDiretti.add(tecnico);
+        }
     }
 
-    @Override
     double calcolaStipendio() {
-        double baseSalary = 2000.0;
+        double stipendioBase = 2000.0;
         double bonus = 0.0;
 
         for (Tecnico tecnico : tecniciDiretti) {
@@ -31,11 +32,15 @@ public class Manager extends Dipendente {
             }
         }
 
-        return baseSalary + bonus;
+        return stipendioBase + bonus;
     }
 
     public ArrayList<Tecnico> getTecniciDiretti() {
         return tecniciDiretti;
+    }
+
+    public double getStipendio() {
+        return calcolaStipendio(); // O restituisci il valore dello stipendio memorizzato nell'attributo
     }
 
     public void setTecniciDiretti(ArrayList<Tecnico> tecniciDiretti) {
@@ -66,7 +71,11 @@ public class Manager extends Dipendente {
             return false;
         }
         Dipendente other = (Dipendente) obj;
-        return Objects.equals(codiceFiscale, other.codiceFiscale);
+        if (codiceFiscale == null) {
+            return other.codiceFiscale == null;
+        } else {
+            return codiceFiscale.equals(other.codiceFiscale);
+        }
     }
 
 }

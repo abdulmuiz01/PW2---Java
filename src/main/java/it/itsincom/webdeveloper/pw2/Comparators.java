@@ -16,4 +16,5 @@ public class Comparators {
             return Double.compare(d1.getStipendio(), d2.getStipendio());
         }
     }
+
 }

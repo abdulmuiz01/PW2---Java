@@ -2,7 +2,6 @@ package it.itsincom.webdeveloper.pw2;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Dirigente extends Dipendente {
     private String divisione;
@@ -20,7 +19,7 @@ public class Dirigente extends Dipendente {
     }
 
     // si basa sull'araylist dipendenti deve esserre inizializzato
-    @Override
+
     public double calcolaStipendio() {
         double stipendioBase = 2500; // salario standard
         double bonus = calcolaBonus(); // calc bonus
@@ -65,7 +64,11 @@ public class Dirigente extends Dipendente {
             return false;
         }
         Dipendente other = (Dipendente) obj;
-        return Objects.equals(codiceFiscale, other.codiceFiscale);
+        if (codiceFiscale == null) {
+            return other.codiceFiscale == null;
+        } else {
+            return codiceFiscale.equals(other.codiceFiscale);
+        }
     }
 
 }
